@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Transferencia {
+  transferencia_id                               Int                  @id @default(autoincrement())
+  cuenta_origen_id                               Int
+  cuenta_destino_id                              Int
+  monto                                          Decimal              @db.Decimal(15, 2)
+  descripcion                                    String?              @db.VarChar(255)
+  estado_transferencia_id                        Int
+  fecha_creacion                                 DateTime?            @default(now()) @db.Timestamp(0)
+  fecha_modificacion                             DateTime?            @default(now()) @db.Timestamp(0)
+  cuenta_Transferencia_cuenta_origen_idTocuenta  cuenta               @relation("Transferencia_cuenta_origen_idTocuenta", fields: [cuenta_origen_id], references: [cuenta_id], onDelete: NoAction, onUpdate: NoAction, map: "Transferencia_ibfk_1")
+  cuenta_Transferencia_cuenta_destino_idTocuenta cuenta               @relation("Transferencia_cuenta_destino_idTocuenta", fields: [cuenta_destino_id], references: [cuenta_id], onDelete: NoAction, onUpdate: NoAction, map: "Transferencia_ibfk_2")
+  estado_transferencia                           estado_transferencia @relation(fields: [estado_transferencia_id], references: [estado_transferencia_id], onDelete: NoAction, onUpdate: NoAction, map: "Transferencia_ibfk_3")
+  movimiento                                     movimiento[]
+
+  @@index([cuenta_destino_id], map: "cuenta_destino_id")
+  @@index([cuenta_origen_id], map: "cuenta_origen_id")
+  @@index([estado_transferencia_id], map: "estado_transferencia_id")
+}
+
+model cuenta {
+  cuenta_id                                             Int             @id @default(autoincrement())
+  numero_cuenta                                         String          @unique(map: "numero_cuenta") @db.VarChar(100)
+  usuario_id                                            Int
+  tipo_cuenta_id                                        Int
+  saldo                                                 Decimal         @default(0.00) @db.Decimal(15, 2)
+  fecha_creacion                                        DateTime?       @default(now()) @db.Timestamp(0)
+  fecha_modificacion                                    DateTime?       @default(now()) @db.Timestamp(0)
+  Transferencia_Transferencia_cuenta_origen_idTocuenta  Transferencia[] @relation("Transferencia_cuenta_origen_idTocuenta")
+  Transferencia_Transferencia_cuenta_destino_idTocuenta Transferencia[] @relation("Transferencia_cuenta_destino_idTocuenta")
+  usuario                                               usuario         @relation(fields: [usuario_id], references: [usuario_id], onDelete: NoAction, onUpdate: NoAction, map: "cuenta_ibfk_1")
+  tipo_cuenta                                           tipo_cuenta     @relation(fields: [tipo_cuenta_id], references: [tipo_cuenta_id], onDelete: NoAction, onUpdate: NoAction, map: "cuenta_ibfk_2")
+  movimiento                                            movimiento[]
+
+  @@index([tipo_cuenta_id], map: "tipo_cuenta_id")
+  @@index([usuario_id], map: "usuario_id")
+}
+
+model estado_transferencia {
+  estado_transferencia_id Int             @id @default(autoincrement())
+  nombre                  String          @unique(map: "nombre") @db.VarChar(255)
+  descripcion             String          @db.VarChar(255)
+  fecha_creacion          DateTime?       @default(now()) @db.Timestamp(0)
+  fecha_modificacion      DateTime?       @default(now()) @db.Timestamp(0)
+  Transferencia           Transferencia[]
+}
+
+model movimiento {
+  movimiento_id      Int             @id @default(autoincrement())
+  cuenta_id          Int
+  tipo_movimiento_id Int
+  monto              Decimal         @db.Decimal(15, 2)
+  transferencia_id   Int?
+  saldo_anterior     Decimal         @db.Decimal(15, 2)
+  saldo_nuevo        Decimal         @db.Decimal(15, 2)
+  descripcion        String?         @db.VarChar(255)
+  fecha_creacion     DateTime?       @default(now()) @db.Timestamp(0)
+  fecha_modificacion DateTime?       @default(now()) @db.Timestamp(0)
+  cuenta             cuenta          @relation(fields: [cuenta_id], references: [cuenta_id], onDelete: NoAction, onUpdate: NoAction, map: "movimiento_ibfk_1")
+  tipo_movimiento    tipo_movimiento @relation(fields: [tipo_movimiento_id], references: [tipo_movimiento_id], onDelete: NoAction, onUpdate: NoAction, map: "movimiento_ibfk_2")
+  Transferencia      Transferencia?  @relation(fields: [transferencia_id], references: [transferencia_id], onDelete: NoAction, onUpdate: NoAction, map: "movimiento_ibfk_3")
+
+  @@index([cuenta_id], map: "cuenta_id")
+  @@index([tipo_movimiento_id], map: "tipo_movimiento_id")
+  @@index([transferencia_id], map: "transferencia_id")
+}
+
+model tipo_cuenta {
+  tipo_cuenta_id     Int       @id @default(autoincrement())
+  nombre             String    @unique(map: "nombre") @db.VarChar(255)
+  descripcion        String    @db.VarChar(255)
+  fecha_creacion     DateTime? @default(now()) @db.Timestamp(0)
+  fecha_modificacion DateTime? @default(now()) @db.Timestamp(0)
+  cuenta             cuenta[]
+}
+
+model tipo_movimiento {
+  tipo_movimiento_id Int          @id @default(autoincrement())
+  nombre             String       @unique(map: "nombre") @db.VarChar(255)
+  descripcion        String       @db.VarChar(255)
+  fecha_creacion     DateTime?    @default(now()) @db.Timestamp(0)
+  fecha_modificacion DateTime?    @default(now()) @db.Timestamp(0)
+  movimiento         movimiento[]
+}
+
+model usuario {
+  usuario_id         Int       @id @default(autoincrement())
+  nombre             String    @db.VarChar(255)
+  email              String    @unique(map: "email") @db.VarChar(255)
+  contrasena         String    @db.Text
+  fecha_creacion     DateTime? @default(now()) @db.Timestamp(0)
+  fecha_modificacion DateTime? @default(now()) @db.Timestamp(0)
+  cuenta             cuenta[]
+  token              token[]
+}
+
+model token {
+  token_id       Int      @id @default(autoincrement())
+  usuario_id     Int
+  token          String   @unique(map: "uq_refresh_token") @db.VarChar(512)
+  expira_en      DateTime @db.DateTime(0)
+  revocado       Boolean  @default(false)
+  fecha_creacion DateTime @default(now()) @db.DateTime(0)
+  usuario        usuario  @relation(fields: [usuario_id], references: [usuario_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_refresh_token_usuario")
+
+  @@index([usuario_id], map: "fk_refresh_token_usuario")
+}

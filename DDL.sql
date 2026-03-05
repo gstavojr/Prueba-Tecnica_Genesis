@@ -11,6 +11,23 @@ CREATE TABLE usuario (
   fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+
+
+CREATE TABLE token (
+token_id          INT             NOT NULL AUTO_INCREMENT,
+  usuario_id        INT             NOT NULL,
+  token             VARCHAR(512)    NOT NULL,
+  expira_en         DATETIME        NOT NULL,
+  revocado          TINYINT(1)      NOT NULL DEFAULT 0,
+  fecha_creacion    DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  CONSTRAINT pk_refresh_token PRIMARY KEY (token_id),
+  CONSTRAINT uq_refresh_token UNIQUE (token),
+  CONSTRAINT fk_refresh_token_usuario FOREIGN KEY (usuario_id)
+    REFERENCES usuario (usuario_id)
+    ON DELETE CASCADE
+)
+
 CREATE TABLE tipo_cuenta(
   tipo_cuenta_id INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(255) NOT NULL UNIQUE,
@@ -80,6 +97,7 @@ CREATE TABLE movimiento (
 );
 
 
+
 INSERT INTO tipo_cuenta (nombre, descripcion)
 VALUES
 ('Ahorro', 'Cuenta de ahorro tradicional'),
@@ -97,3 +115,13 @@ VALUES
 ('Completada', 'Transferencia realizada correctamente');
 
 
+INSERT INTO cuenta (numero_cuenta, usuario_id, tipo_cuenta_id, saldo)
+VALUES
+  ('LEND-0002-AHO-001', 2, 1, 1000.00),
+  ('LEND-0003-AHO-001', 3, 1, 2500.00);
+
+
+SELECT c.cuenta_id, u.nombre, c.numero_cuenta, tc.nombre AS tipo, c.saldo
+FROM cuenta c
+JOIN usuario u ON u.usuario_id = c.usuario_id
+JOIN tipo_cuenta tc ON tc.tipo_cuenta_id = c.tipo_cuenta_id;
