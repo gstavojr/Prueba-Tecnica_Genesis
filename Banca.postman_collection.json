@@ -1,0 +1,302 @@
+{
+	"info": {
+		"_postman_id": "6d8990c6-df4d-4137-ac98-0dbe94681761",
+		"name": "Banca",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9970916"
+	},
+	"item": [
+		{
+			"name": "Registro",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Gustavo Sanchez\",\r\n  \"email\": \"gustavo.sanchez@gmail.com\",\r\n  \"contrasena\": \"Password123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Registro",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Gustavo Sanchez\",\r\n  \"email\": \"gustavo.sanchez@gmail.com\",\r\n  \"contrasena\": \"Password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "516"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"204-7KoF00AHXqbcGLcIhXXR0mmYy5o\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 05 Mar 2026 04:20:01 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"user\": {\n        \"usuario_id\": 3,\n        \"nombre\": \"Gustavo Sanchez\",\n        \"email\": \"gustavo.sanchez@gmail.com\"\n    },\n    \"tokens\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImVtYWlsIjoiZ3VzdGF2by5zYW5jaGV6QGdtYWlsLmNvbSIsImlhdCI6MTc3MjY4NDQwMSwiZXhwIjoxNzcyNjg1MzAxfQ.MlL3rav0TDl9oYdIQBwhaTCYPrpTKYOD52YRgYjU-LQ\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImVtYWlsIjoiZ3VzdGF2by5zYW5jaGV6QGdtYWlsLmNvbSIsImlhdCI6MTc3MjY4NDQwMSwiZXhwIjoxNzczMjg5MjAxfQ._dmSHa_vEmO2JLZ78vlOKEmiGKDTzS7BuYS6-jCx2eQ\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "EstadoCuenta",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/banca/usuarios/3/cuentas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"banca",
+						"usuarios",
+						"3",
+						"cuentas"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "EstadoCuenta",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/banca/usuarios/3/cuentas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"banca",
+								"usuarios",
+								"3",
+								"cuentas"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "393"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"189-Y5XSU4B7mpUf/7w3Pmgn8JdtFxM\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 05 Mar 2026 04:30:16 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"usuario_id\": 3,\n    \"total\": 1,\n    \"cuentas\": [\n        {\n            \"cuenta_id\": 2,\n            \"numero_cuenta\": \"LEND-0003-AHO-001\",\n            \"tipo_cuenta\": \"Ahorro\",\n            \"saldo_actual\": 2000,\n            \"movimientos\": [\n                {\n                    \"movimiento_id\": 1,\n                    \"cuenta_id\": 2,\n                    \"tipo_movimiento_id\": 1,\n                    \"tipo_movimiento\": \"Débito\",\n                    \"transferencia_id\": 1,\n                    \"monto\": 500,\n                    \"saldo_anterior\": 2500,\n                    \"saldo_nuevo\": 2000,\n                    \"descripcion\": \"Transferencia a cuenta 1\",\n                    \"fecha_creacion\": \"2026-03-05T04:29:01.000Z\"\n                }\n            ]\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Transferencia",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"cuenta_origen_id\": 2,\r\n  \"cuenta_destino_id\": 1,\r\n  \"monto\": 500,\r\n  \"descripcion\": \"Transferencia de Gustavo a Nanci\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/banca/transferencias",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"banca",
+						"transferencias"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Transferencia",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cuenta_origen_id\": 2,\r\n  \"cuenta_destino_id\": 1,\r\n  \"monto\": 500,\r\n  \"descripcion\": \"Transferencia de Gustavo a Nanci\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/banca/transferencias",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"banca",
+								"transferencias"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "287"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"11f-zTaHxYBu0tORJTXiSN7ih1IMEUg\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 05 Mar 2026 04:29:01 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"mensaje\": \"Transferencia realizada exitosamente\",\n    \"transferencia\": {\n        \"transferencia_id\": 1,\n        \"cuenta_origen_id\": 2,\n        \"cuenta_destino_id\": 1,\n        \"monto\": 500,\n        \"descripcion\": \"Transferencia de Gustavo a Nanci\",\n        \"estado_transferencia_id\": 2,\n        \"estado\": \"Completada\",\n        \"fecha_creacion\": \"2026-03-05T04:29:01.000Z\"\n    }\n}"
+				}
+			]
+		}
+	]
+}
